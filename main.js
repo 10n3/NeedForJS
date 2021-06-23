@@ -5,12 +5,15 @@ const start = document.querySelector('.start');
 const gameArea = document.querySelector('.gameArea');
 const car = document.createElement('div');
 
+const music = new Audio('./audio/Valim.mp3');
+
 car.classList.add('car');
 
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
 
 start.addEventListener('click', startGame);
+
 
 const keys = {
     ArrowUp: false,
@@ -23,13 +26,18 @@ const keys = {
 const settings = {
     start: false,
     score: 0,
-    speed: 3,
+    speed: 6,
     traffic: 3,
 };
+
+const MAX_ENEMIES = 7;
 
 /*FUNCTIONS */
 function startGame() {
     start.classList.add('hide');
+
+    music.play();
+
 
     for (let i = 0; i < getQuantityElements(100); i++) {
         const line = document.createElement('div');
@@ -48,7 +56,11 @@ function startGame() {
 
         enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         enemy.style.top = enemy.y + 'px';
-        enemy.style.background = 'transparent url(\'../images/enemy.png\') center / cover no-repeat';
+        enemy.style.background = `
+        transparent 
+        url(\'../images/enemy${getRandomEnemy(MAX_ENEMIES)}.png\') 
+        center / cover 
+        no-repeat`;
 
         gameArea.appendChild(enemy);
     }
@@ -92,13 +104,18 @@ function playGame() {
 }
 
 function startRun(event){
-    event.preventDefault();
-    keys[event.key] = true;
+    if(keys.hasOwnProperty(event.key)){
+        event.preventDefault();
+        keys[event.key] = true;
+    }
 }
 
 function stopRun(event){
-    event.preventDefault();
-    keys[event.key] = false;
+    
+    if(keys.hasOwnProperty(event.key)){
+        event.preventDefault();
+        keys[event.key] = false;
+    }
 }
 
 function moveRoad() {
@@ -116,7 +133,7 @@ function moveRoad() {
 function moveEnemy(){
     let enemies = document.querySelectorAll('.enemy');
     enemies.forEach(function(enemy){
-        enemy.y += settings.speed / 2;
+        enemy.y += settings.speed / 1.5;
         enemy.style.top = enemy.y + 'px';
 
         if(enemy.y >= document.documentElement.clientHeight) {
@@ -129,3 +146,5 @@ function moveEnemy(){
 function getQuantityElements(heightElement) {
     return document.documentElement.clientHeight / heightElement + 1;
 }
+
+const getRandomEnemy = (max) => Math.floor(Math.random() * max + 1);
