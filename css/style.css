@@ -1,0 +1,41 @@
+.hide {
+    display: none;
+}
+
+
+:root {
+    --car-width: 50px;
+    --car-height: 100px;
+    --game-area-width: 300px;
+    --game-area-height: 100vh;
+    --line-width: 10px;
+    --line-height: 50px;
+}
+
+.car, .enemy {
+    position: absolute;
+    height: var(--car-height);
+    width: var(--car-width);
+    background: transparent url('../images/player.png') center / cover no-repeat;
+    
+    left: 125px;
+    bottom: 10px;
+}
+
+.gameArea {
+    width: var(--game-area-width);
+    height: var(--game-area-height);
+    position: relative;
+    margin: auto;
+    background: #222;
+    overflow: hidden;
+}
+
+.line {
+    position: absolute;
+    width: var(--line-width);
+    height: var(--line-height);
+    
+    left: calc(var(--game-area-width)/2 - var(--line-width)/2);
+    background: #fff;
+}
