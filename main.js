@@ -36,7 +36,9 @@ const MAX_ENEMIES = 7;
 function startGame() {
     start.classList.add('hide');
 
-    music.play();
+    gameArea.innerHTML = '';
+    
+    //music.play();
 
 
     for (let i = 0; i < getQuantityElements(100); i++) {
@@ -67,7 +69,13 @@ function startGame() {
 
     settings.start = true;
 
+    settings.score = 0;
+
     gameArea.appendChild(car);
+
+    car.style.left = gameArea.offsetWidth / 2 - car.offsetWidth / 2 + 'px';
+    car.style.top = 'auto';
+    car.style.bottom = '10px';
 
     settings.x = car.offsetLeft;
     settings.y = car.offsetTop;
@@ -79,6 +87,9 @@ function playGame() {
     
     if(settings.start){
         
+        settings.score += settings.speed;
+        score.innerHTML = 'SCORE ' + settings.score;
+
         moveRoad();
         moveEnemy();
 
@@ -133,6 +144,21 @@ function moveRoad() {
 function moveEnemy(){
     let enemies = document.querySelectorAll('.enemy');
     enemies.forEach(function(enemy){
+
+        let carRect = car.getBoundingClientRect();
+        let enemyRect = enemy.getBoundingClientRect();
+
+        if(carRect.top <= enemyRect.bottom &&
+           carRect.right >= enemyRect.left &&
+           carRect.left <= enemyRect.right &&
+           carRect.bottom >= enemyRect.top) {
+            
+            settings.start = false;
+            
+            start.classList.remove('hide');
+            start.style.top = score.offsetHeight + 'px';
+        }
+
         enemy.y += settings.speed / 1.5;
         enemy.style.top = enemy.y + 'px';
 
