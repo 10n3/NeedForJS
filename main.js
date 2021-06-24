@@ -3,7 +3,20 @@
 const score = document.querySelector('.score');
 const start = document.querySelector('.start');
 const gameArea = document.querySelector('.gameArea');
+
+const highScore = document.createElement('div');
+highScore.classList.add('highScore');
+gameArea.classList.add('hide');
+
+
 const car = document.createElement('div');
+
+const difficultyMenu = document.querySelector('.difMenu');
+
+const difficulty = document.querySelectorAll('.difficulty');
+difficulty[0].addEventListener("click", () => {settings.speed = 2;});
+difficulty[1].addEventListener("click", () => {settings.speed = 5;});
+difficulty[2].addEventListener("click", () => {settings.speed = 8;});
 
 const music = new Audio('./audio/Valim.mp3');
 
@@ -28,6 +41,7 @@ const settings = {
     score: 0,
     speed: 6,
     traffic: 3,
+    highScore: 0,
 };
 
 const MAX_ENEMIES = 7;
@@ -35,11 +49,13 @@ const MAX_ENEMIES = 7;
 /*FUNCTIONS */
 function startGame() {
     start.classList.add('hide');
+    difficultyMenu.classList.add('hide');
 
     gameArea.innerHTML = '';
     
     //music.play();
 
+    gameArea.classList.remove('hide');
 
     for (let i = 0; i < getQuantityElements(100); i++) {
         const line = document.createElement('div');
@@ -156,7 +172,18 @@ function moveEnemy(){
             settings.start = false;
             
             start.classList.remove('hide');
+            difficultyMenu.classList.remove('hide');
             start.style.top = score.offsetHeight + 'px';
+            difficultyMenu.style.paddingTop = start.offsetHeight + score.offsetHeight + 'px';
+
+            if(settings.highScore <= settings.score) { 
+                settings.highScore = settings.score;
+                 
+            }
+            gameArea.insertAdjacentElement("afterend", highScore);
+            
+            highScore.innerHTML = "HIGHSCORE: " + settings.highScore;
+            
         }
 
         enemy.y += settings.speed / 1.5;

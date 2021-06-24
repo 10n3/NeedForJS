@@ -70,3 +70,43 @@
     text-align: center;
     font-weight: 500;
 }
+
+.difMenu {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    padding-top: 88px;
+    font-size: 1.5rem;
+    font-family: sans-serif;
+    font-weight: 700;
+}
+
+.difMenu a {
+    text-decoration: none;
+    display: inline-block;
+    background:indigo;
+    cursor: pointer;
+    border-radius: 5px;
+    border-color: ivory;
+    color: #fff;
+    text-align: center;
+    width: 33.1%;
+    
+    
+}
+.difMenu li {
+    display: inline;
+    width: 200px;
+}
+
+.highScore {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+    background:indigo;
+    color: #fff;
+    font-size: 2rem;
+    font-family: sans-serif;
+    padding: 20px 30px 20px 30px;
+}
